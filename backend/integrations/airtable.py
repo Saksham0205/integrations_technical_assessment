@@ -11,9 +11,9 @@ import base64
 import hashlib
 
 import requests
-from integrations.integration_item import IntegrationItem
+from backend.integrations.integration_item import IntegrationItem
 
-from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
+from backend.redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
 # CLIENT_ID = 'XXX'
 # CLIENT_SECRET = 'XXX'

@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from integrations.airtable import authorize_airtable, get_items_airtable, oauth2callback_airtable, get_airtable_credentials
-from integrations.notion import authorize_notion, get_items_notion, oauth2callback_notion, get_notion_credentials
-from integrations.hubspot import authorize_hubspot, get_hubspot_credentials, get_items_hubspot, oauth2callback_hubspot
+from backend.integrations.airtable import authorize_airtable, get_items_airtable, oauth2callback_airtable, get_airtable_credentials
+from backend.integrations.notion import authorize_notion, get_items_notion, oauth2callback_notion, get_notion_credentials
+from backend.integrations.hubspot import authorize_hubspot, get_hubspot_credentials, get_items_hubspot, oauth2callback_hubspot
 
 app = FastAPI()
 
@@ -25,19 +25,19 @@ def read_root():
 
 
 # Airtable
-@app.post('/integrations/airtable/authorize')
+@app.post('backend/integrations/airtable/authorize')
 async def authorize_airtable_integration(user_id: str = Form(...), org_id: str = Form(...)):
     return await authorize_airtable(user_id, org_id)
 
-@app.get('/integrations/airtable/oauth2callback')
+@app.get('backend/integrations/airtable/oauth2callback')
 async def oauth2callback_airtable_integration(request: Request):
     return await oauth2callback_airtable(request)
 
-@app.post('/integrations/airtable/credentials')
+@app.post('backend/integrations/airtable/credentials')
 async def get_airtable_credentials_integration(user_id: str = Form(...), org_id: str = Form(...)):
     return await get_airtable_credentials(user_id, org_id)
 
-@app.post('/integrations/airtable/load')
+@app.post('backend/integrations/airtable/load')
 async def get_airtable_items(credentials: str = Form(...)):
     return await get_items_airtable(credentials)
 
@@ -47,31 +47,31 @@ async def get_airtable_items(credentials: str = Form(...)):
 async def authorize_notion_integration(user_id: str = Form(...), org_id: str = Form(...)):
     return await authorize_notion(user_id, org_id)
 
-@app.get('/integrations/notion/oauth2callback')
+@app.get('backend/integrations/notion/oauth2callback')
 async def oauth2callback_notion_integration(request: Request):
     return await oauth2callback_notion(request)
 
-@app.post('/integrations/notion/credentials')
+@app.post('backend/integrations/notion/credentials')
 async def get_notion_credentials_integration(user_id: str = Form(...), org_id: str = Form(...)):
     return await get_notion_credentials(user_id, org_id)
 
-@app.post('/integrations/notion/load')
+@app.post('backend/integrations/notion/load')
 async def get_notion_items(credentials: str = Form(...)):
     return await get_items_notion(credentials)
 
 # HubSpot
-@app.post('/integrations/hubspot/authorize')
+@app.post('backend/integrations/hubspot/authorize')
 async def authorize_hubspot_integration(user_id: str = Form(...), org_id: str = Form(...)):
     return await authorize_hubspot(user_id, org_id)
 
-@app.get('/integrations/hubspot/oauth2callback')
+@app.get('backend/integrations/hubspot/oauth2callback')
 async def oauth2callback_hubspot_integration(request: Request):
     return await oauth2callback_hubspot(request)
 
-@app.post('/integrations/hubspot/credentials')
+@app.post('backend/integrations/hubspot/credentials')
 async def get_hubspot_credentials_integration(user_id: str = Form(...), org_id: str = Form(...)):
     return await get_hubspot_credentials(user_id, org_id)
 
-@app.post('/integrations/hubspot/get_hubspot_items')
+@app.post('backend/integrations/hubspot/get_hubspot_items')
 async def load_slack_data_integration(credentials: str = Form(...)):
     return await get_items_hubspot(credentials)
