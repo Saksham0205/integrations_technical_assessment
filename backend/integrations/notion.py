@@ -11,12 +11,12 @@ from integrations.integration_item import IntegrationItem
 
 from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
-CLIENT_ID = '176d872b-594c-800d-82e0-003745d9f437'
-CLIENT_SECRET = 'secret_44adBlUOgKBpW53Nu3lHhvufvI8IIRq6OSwoBXQAfhH'
+CLIENT_ID = '177d872b-594c-80d8-b9f4-0037023165d0'
+CLIENT_SECRET = 'secret_CeRQ8n4Jg6ahJQPQFfkOLOwRwMXG3Eu3ZS8XfXDOzFK'
 encoded_client_id_secret = base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()
 
 REDIRECT_URI = 'http://0.0.0.0:8000/integrations/notion/oauth2callback'
-authorization_url = f'https://api.notion.com/v1/oauth/authorize?client_id=176d872b-594c-800d-82e0-003745d9f437&response_type=code&owner=user&redirect_uri=https%3A%2F%2F0.0.0.0%3A8000%2Fintegrations%2Fnotion%2Foauth2callback'
+authorization_url = f'https://api.notion.com/v1/oauth/authorize?client_id=177d872b-594c-80d8-b9f4-0037023165d0&response_type=code&owner=user&redirect_uri=https%3A%2F%2F0.0.0.0%3A8000%2Fintegrations%2Fnotion%2Foauth2callback'
 
 async def authorize_notion(user_id, org_id):
     state_data = {
