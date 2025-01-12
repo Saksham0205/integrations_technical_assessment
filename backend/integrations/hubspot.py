@@ -9,6 +9,7 @@ import requests
 from integrations.integration_item import IntegrationItem
 from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
+
 CLIENT_ID = '329147ef-ac8b-4863-bced-77b7b195258f'
 CLIENT_SECRET = 'e59aec7edddef2edf4388ef611b151ab5fc85c61f828df909c147085e8ffb4f1'
 REDIRECT_URI = 'http://localhost:8000/integrations/airtable/oauth2callback'
