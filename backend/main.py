@@ -1,10 +1,13 @@
+from http.client import HTTPException
+
 from fastapi import FastAPI, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 
-from integrations.airtable import authorize_airtable, get_items_airtable, oauth2callback_airtable, get_airtable_credentials
-from integrations.notion import authorize_notion, get_items_notion, oauth2callback_notion, get_notion_credentials
-from integrations.hubspot import authorize_hubspot, get_hubspot_credentials, get_items_hubspot, oauth2callback_hubspot
+from backend.integrations.airtable import authorize_airtable, get_items_airtable, oauth2callback_airtable, get_airtable_credentials
+from backend.integrations.notion import authorize_notion, get_items_notion, oauth2callback_notion, get_notion_credentials
+from backend.integrations.hubspot import authorize_hubspot, get_hubspot_credentials, get_items_hubspot, oauth2callback_hubspot
+
 
 app = FastAPI()
 
@@ -40,7 +43,13 @@ async def get_airtable_credentials_integration(user_id: str = Form(...), org_id:
 
 @app.post("/integrations/airtable/load")
 async def get_airtable_items(credentials: str = Form(...)):
-    return await get_items_airtable(credentials)
+    try:
+        items = await get_items_airtable(credentials)
+        print("Loaded items:", items)  # For debugging
+        return items
+    except Exception as e:
+        print("Error loading items:", str(e))  # For debugging
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # Notion
