@@ -1,18 +1,18 @@
 # airtable.py
 
-import datetime
-import json
-import secrets
-from fastapi import Request, HTTPException
-from fastapi.responses import HTMLResponse
-import httpx
 import asyncio
 import base64
 import hashlib
-import requests
-from integrations.integration_item import IntegrationItem
+import json
+import secrets
 
-from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
+import httpx
+import requests
+from fastapi import Request, HTTPException
+from fastapi.responses import HTMLResponse
+
+from .integration_item import IntegrationItem
+from ..redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
 # CLIENT_ID = 'XXX'
 # CLIENT_SECRET = 'XXX'
@@ -95,14 +95,6 @@ async def oauth2callback_airtable(request: Request):
     """
     return HTMLResponse(content=close_window_script)
 
-async def get_airtable_credentials(user_id, org_id):
-    credentials = await get_value_redis(f'airtable_credentials:{org_id}:{user_id}')
-    if not credentials:
-        raise HTTPException(status_code=400, detail='No credentials found.')
-    credentials = json.loads(credentials)
-    await delete_key_redis(f'airtable_credentials:{org_id}:{user_id}')
-
-    return credentials
 
 def create_integration_item_metadata_object(
     response_json: str, item_type: str, parent_id=None, parent_name=None
@@ -169,3 +161,12 @@ async def get_items_airtable(credentials) -> list[IntegrationItem]:
 
     print(f'list_of_integration_item_metadata: {list_of_integration_item_metadata}')
     return list_of_integration_item_metadata
+
+
+async def get_airtable_credentials(user_id, org_id):
+    credentials = await get_value_redis(f'airtable_credentials:{org_id}:{user_id}')
+    if not credentials:
+        raise HTTPException(status_code=400, detail='No credentials found.')
+    credentials = json.loads(credentials)
+    await delete_key_redis(f'airtable_credentials:{org_id}:{user_id}')
+    return credentials

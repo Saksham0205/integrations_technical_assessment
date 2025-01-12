@@ -6,8 +6,9 @@ import httpx
 import asyncio
 import base64
 import requests
-from integrations.integration_item import IntegrationItem
-from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
+from .integration_item import IntegrationItem
+
+from ..redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
 
 CLIENT_ID = '329147ef-ac8b-4863-bced-77b7b195258f'

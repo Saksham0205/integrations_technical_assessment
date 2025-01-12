@@ -1,5 +1,3 @@
-// airtable.js
-
 import { useState, useEffect } from 'react';
 import {
     Box,
@@ -58,8 +56,8 @@ export const AirtableIntegration = ({ user, org, integrationParams, setIntegrati
     }
 
     useEffect(() => {
-        setIsConnected(integrationParams?.credentials ? true : false)
-    }, []);
+        setIsConnected(Boolean(integrationParams?.credentials));
+    }, [integrationParams?.credentials]);
 
     return (
         <>
@@ -68,7 +66,7 @@ export const AirtableIntegration = ({ user, org, integrationParams, setIntegrati
             <Box display='flex' alignItems='center' justifyContent='center' sx={{mt: 2}}>
                 <Button 
                     variant='contained' 
-                    onClick={isConnected ? () => {} :handleConnectClick}
+                    onClick={isConnected ? () => {} : handleConnectClick}
                     color={isConnected ? 'success' : 'primary'}
                     disabled={isConnecting}
                     style={{

@@ -24,7 +24,7 @@ export const HubspotIntegration = ({ user, org, integrationParams, setIntegratio
 
             // Polling for the window to close
             const pollTimer = window.setInterval(() => {
-                if (newWindow?.closed !== false) { 
+                if (newWindow?.closed !== false) {
                     window.clearInterval(pollTimer);
                     handleWindowClosed();
                 }
@@ -42,7 +42,7 @@ export const HubspotIntegration = ({ user, org, integrationParams, setIntegratio
             formData.append('user_id', user);
             formData.append('org_id', org);
             const response = await axios.post(`http://localhost:8000/integrations/hubspot/credentials`, formData);
-            const credentials = response.data; 
+            const credentials = response.data;
             if (credentials) {
                 setIsConnecting(false);
                 setIsConnected(true);
@@ -64,8 +64,8 @@ export const HubspotIntegration = ({ user, org, integrationParams, setIntegratio
         <Box sx={{mt: 2}}>
             Parameters
             <Box display='flex' alignItems='center' justifyContent='center' sx={{mt: 2}}>
-                <Button 
-                    variant='contained' 
+                <Button
+                    variant='contained'
                     onClick={isConnected ? () => {} : handleConnectClick}
                     color={isConnected ? 'success' : 'primary'}
                     disabled={isConnecting}
